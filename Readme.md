@@ -12,7 +12,9 @@ matrix-multiply-opencl/
 │ └── test_matrix_multiply.cpp
 ├── CMakeLists.txt # Конфигурация сборки
 ├── LICENSE # MIT лицензия
-└── README.md # Документация
+└── README.md # Этот файл
+
+text
 
 ## 🛠️ Сборка и запуск
 
@@ -25,10 +27,24 @@ matrix-multiply-opencl/
 ```bash
 sudo apt-get update
 sudo apt-get install build-essential cmake pocl-opencl-icd libpocl-dev
+Сборка проекта
+bash
+mkdir build
+cd build
+cmake ..
+make
+Запуск приложения
+bash
+./matrix_multiply
+Запуск тестов
+bash
+./matrix_multiply_test
 🧪 Тестирование
 Проект использует POCL для запуска полноценных OpenCL тестов на CI.
+
 📄 Лицензия
 MIT License - смотрите файл LICENSE.
+
 🔄 CI/CD
 Настроен GitHub Actions с:
 
