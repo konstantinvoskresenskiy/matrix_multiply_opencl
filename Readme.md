@@ -41,13 +41,13 @@ bash
 bash
 ./matrix_multiply_test
 
-Тестирование
+## Тестирование
 Проект использует POCL для запуска полноценных OpenCL тестов на CI.
 
- Лицензия
+## Лицензия
 MIT License - смотрите файл LICENSE.
 
- CI/CD
+ ## CI/CD
 Настроен GitHub Actions с:
 
 Сборкой проекта
