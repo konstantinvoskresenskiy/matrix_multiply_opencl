@@ -1,0 +1,60 @@
+name: Непрерывная интеграция
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  сборка-и-тестирование:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Клонирование репозитория
+      uses: actions/checkout@v3
+      
+    - name: Установка OpenCL (pocl)
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y pocl-opencl-icd
+        
+    - name: Установка инструментов сборки
+      run: |
+        sudo apt-get install -y cmake build-essential
+        
+    - name: Создание директории сборки
+      run: mkdir -p build
+      
+    - name: Конфигурация CMake
+      run: |
+        cd build
+        cmake ..
+        
+    - name: Сборка проекта
+      run: |
+        cd build
+        make
+        
+    - name: Запуск базовых тестов
+      run: |
+        cd build
+        ./test_basic
+        
+    - name: Запуск OpenCL тестов
+      run: |
+        cd build
+        ./test_opencl
+        
+    - name: Проверка форматирования кода
+      run: |
+        sudo apt-get install -y clang-format
+        find . -name '*.cpp' -o -name '*.h' -o -name '*.cl' | xargs clang-format -n --Werror
+        
+    - name: Проверка наличия kernel файла
+      run: |
+        if [ ! -f "kernels/matrix_multiply.cl" ]; then
+          echo "Ошибка: kernel файл не найден!"
+          exit 1
+        fi
+        echo "✓ Kernel файл найден"
